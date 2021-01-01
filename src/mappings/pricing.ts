@@ -4,14 +4,15 @@ import { BigDecimal, Address, BigInt } from '@graphprotocol/graph-ts/index'
 import { ZERO_BD, factoryContract, ADDRESS_ZERO, ONE_BD } from './helpers'
 
 const WETH_ADDRESS = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
-const TAO_DAI_PAIR = '0xcacBa00e0e9E2B4b475a0E811d48d43c8fBb2b04' // created 10008355
-// const DAI_WETH_PAIR = '0xa478c2975ab1ea89e8196811f51a7b7ade33eb11' // created block 10042267
-// const USDT_WETH_PAIR = '0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852' // created block 10093341
+const TAO_DAI_PAIR = '0x9598bd93a0b0c7cd45ba94bedd14971660189342'
+const USDC_WETH_PAIR = '0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc' // created 10008355
+const DAI_WETH_PAIR = '0xa478c2975ab1ea89e8196811f51a7b7ade33eb11' // created block 10042267
+const USDT_WETH_PAIR = '0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852' // created block 10093341
 // End Old code calculate eth price in usd
 
 
-export function getDAIPriceInTAOA(): BigDecimal {
-  /* // fetch eth prices for each stablecoin
+export function getEthPriceInUSD(): BigDecimal {
+  // fetch eth prices for each stablecoin
   let daiPair = Pair.load(DAI_WETH_PAIR) // dai is token0
   let usdcPair = Pair.load(USDC_WETH_PAIR) // usdc is token0
   let usdtPair = Pair.load(USDT_WETH_PAIR) // usdt is token1
@@ -34,30 +35,7 @@ export function getDAIPriceInTAOA(): BigDecimal {
     return daiPair.token0Price.times(daiWeight).plus(usdcPair.token0Price.times(usdcWeight))
     // USDC is the only pair so far
   } else if (usdcPair !== null) {
-    return usdcPair.token0Price */
-  // } else {
-  //   return ZERO_BD
-  // }
-  // End Old code calculate eth price in usd
-
-  // fetch eth prices for each pairs
-  let tAoaDaiPair = Pair.load(TAO_DAI_PAIR) // weth is token1
-  //let afxUsdcPair = Pair.load(AFX_USDC_PAIR) // usdc is token0
-  
-  //let tomoWethPair = Pair.load(TOMO_WETH_PAIR) // weth is token1
-  //let tomoUsdcPair = Pair.load(TOMO_USDC_PAIR) // usdc is token1
-
-  if(tAoaDaiPair != null // && luaUsdcPair != null && tomoWethPair != null && tomoUsdcPair != null)
-   {
-
-      let totalLiquidityDai = tAoaDaiPair.reserve1//.plus(tomoWethPair.reserve1)
-      // let TSTNWeight = luaWethPair.reserve1.div(totalLiquidityETH)
-      // let tomoWeight = tomoWethPair.reserve1.div(totalLiquidityETH)
-      let daiPriceBasedOnTAOA = tAoaDaiPair.token0Price
-    
-      return daiPriceBasedOnTAOA
-           //   .times(luaWeight)
-           //   .plus(wethPriceBasedOnTomo.times(tomoWeight))
+    return usdcPair.token0Price
   } else {
     return ZERO_BD
   }
